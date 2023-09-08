@@ -1,0 +1,12 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+.fixed {
+  display: none;
+}
+
+/* Show the dialog when it's open */
+.fixed.active {
+  display: block;
+}
