@@ -90,7 +90,7 @@ export default class RecruScene extends Phaser.Scene {
   }
 
   createVirtualJoystick() {
-    this.joyStick = (this.plugins.get('rex-virtual-joystick-plugin"') as any)
+    this.joyStick = (this.plugins.get(`"rexVirtualJoystick"`) as any)
       ?.add(
         this,
         Object.assign({}, this.joystickConfig, {

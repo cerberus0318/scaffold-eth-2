@@ -17,6 +17,7 @@ const GamePage = () => {
     const initPhaser = async () => {
       const Phaser = await import("phaser");
       const { default: GridEngine } = await import("grid-engine");
+      const { default: VirtualJoystickPlugin } = await import("phaser3-rex-plugins/plugins/virtualjoystick-plugin.js");
       const { default: ShopScene } = await import("./scenes/ShopScene");
       const { default: BattleScene } = await import("./scenes/BattleScene");
       const { default: DepotScene } = await import("./scenes/DepotScene");
@@ -62,6 +63,13 @@ const GamePage = () => {
               key: "gridEngine",
               plugin: GridEngine,
               mapping: "gridEngine",
+            },
+          ],
+          global: [
+            {
+              key: "rexVirtualJoystick",
+              plugin: VirtualJoystickPlugin,
+              start: true,
             },
           ],
         },

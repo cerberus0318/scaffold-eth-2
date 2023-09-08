@@ -1,5 +1,3 @@
-import VirtualJoyStickPlugin from "../plugins/rex-virtual-joystick-plugin";
-
 export default class BattleScene extends Phaser.Scene {
   coinsCollected = 0;
 
@@ -67,7 +65,6 @@ export default class BattleScene extends Phaser.Scene {
       frameWidth: 31,
       frameHeight: 32,
     });
-    this.load.plugin('rex-virtual-joystick-plugin"', VirtualJoyStickPlugin, true);
     this.load.image("base", "./assets/base.png");
     this.load.image("thumb", "./assets/thumb.png");
     this.load.scenePlugin("AnimatedTiles", "./assets/AnimatedTiles.js", "animatedMiner", "animatedMiner");
@@ -192,7 +189,7 @@ export default class BattleScene extends Phaser.Scene {
   }
 
   createVirtualJoystick() {
-    this.joyStick = (this.plugins.get('rex-virtual-joystick-plugin"') as any)
+    this.joyStick = (this.plugins.get(`"rexVirtualJoystick"`) as any)
       ?.add(
         this,
         Object.assign({}, this.joystickConfig, {
