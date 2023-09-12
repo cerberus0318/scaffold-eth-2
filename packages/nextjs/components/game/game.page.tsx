@@ -91,7 +91,7 @@ const GamePage = () => {
     <>
       <div className="mt-6">
         <MetaHeader />
-        <div id="game-content" className="min-w-[320px] max-w-[330px] mx-auto" key="game-content">
+        <div id="game-content" className="min-w-[320px] max-w-[1024px] mx-auto" key="game-content">
           {/* <UI game={phaserGameRef.current ? phaserGameRef.current : undefined} /> */}
         </div>
         <div className={`fixed z-10 inset-0 overflow-y-auto ${showDialog ? "active" : ""}`}>
