@@ -51,9 +51,6 @@ export default class ShopScene extends Phaser.Scene {
   }
 
   create(data: any): void {
-    this.sys.game.canvas.width = 320;
-    this.sys.game.canvas.height = 320;
-
     this.cursors = this.input.keyboard?.createCursorKeys();
     this.map = this.make.tilemap({ key: "shopMap" });
     const groundTiles = this.map.addTilesetImage("room") as any;
@@ -64,17 +61,24 @@ export default class ShopScene extends Phaser.Scene {
     this.itemLayer = this.map.createLayer("Item", groundTiles, 0, 0) as Phaser.Tilemaps.TilemapLayer;
 
     // Boundary Effect
-    this.player = this.physics.add.sprite(145, 270, "dude").setScale(0.9);
+    this.player = this.physics.add.sprite(520, 850, "dude").setScale(0.85);
     this.wallLayer.setCollisionBetween(1, 4000);
     this.physics.add.collider(this.player, this.wallLayer);
+
+    this.boxLayer.setDepth(10);
+
     this.physics.add.overlap(
       this.player,
       this.wallLayer,
       (player, tile: any) => {
-        if (tile.x === 4 && tile.y === 9) {
+        if ((tile.x === 15 || tile.x === 16) && tile.y === 28) {
           this.scene.start("battle", { cPos: data.cPos });
         }
-        if ((tile.x === 2 || tile.x === 3) && tile.y === 3) {
+        // console.log(tile.x, tile.y)
+        if (
+          (tile.x === 9 || tile.x === 10 || tile.x === 15 || tile.x === 16 || tile.x === 21 || tile.x === 22) &&
+          tile.y === 10
+        ) {
           if (this.cb) {
             this.cb();
           }
@@ -90,9 +94,9 @@ export default class ShopScene extends Phaser.Scene {
     this.player.setCollideWorldBounds(true);
     this.player.setFrame(1);
     this.physics.add.collider(this.player, this.wallLayer);
-    this.physics.world.bounds.width = 320;
-    this.physics.world.bounds.height = 320;
-    this.cameras.main.setBounds(0, 0, 320, 320);
+    this.physics.world.bounds.width = 1024;
+    this.physics.world.bounds.height = 1024;
+    this.cameras.main.setBounds(0, 0, 1024, 1024);
     this.cameras.main.startFollow(this.player, true, 0.8, 0.8);
 
     this.createVirtualJoystick();
@@ -105,8 +109,8 @@ export default class ShopScene extends Phaser.Scene {
         this,
         Object.assign({}, this.joystickConfig, {
           radius: 32,
-          base: this.add.image(0, 0, "base").setDisplaySize(110, 110),
-          thumb: this.add.image(0, 0, "thumb").setDisplaySize(60, 60),
+          base: this.add.image(0, 0, "base").setDisplaySize(110, 110).setDepth(100),
+          thumb: this.add.image(0, 0, "thumb").setDisplaySize(60, 60).setDepth(100),
         }),
       )
       .on("update", this.update, this);

@@ -57,7 +57,7 @@ export default class BattleScene extends Phaser.Scene {
     this.load.tilemapTiledJSON("minerMap", "assets/tilemaps/maps/miner.tmj");
     this.load.image("room", "assets/tilemaps/tiles/room.png");
     this.load.image("gold", "assets/tilemaps/tiles/gold.png");
-    this.load.tilemapTiledJSON("shopMap", "assets/tilemaps/maps/shop.tmj");
+    this.load.tilemapTiledJSON("shopMap", "assets/tilemaps/maps/shopRoom.tmj");
     this.load.tilemapTiledJSON("depotMap", "assets/tilemaps/maps/depot.tmj");
     this.load.tilemapTiledJSON("forgeMap", "assets/tilemaps/maps/forge.tmj");
     this.load.tilemapTiledJSON("recruMap", "assets/tilemaps/maps/recru.tmj");
@@ -94,10 +94,15 @@ export default class BattleScene extends Phaser.Scene {
     // Boundary Effect
     const pos = data.cPos;
     if (pos) {
-      this.player = this.physics.add.sprite(pos.x, pos.y + 4, "dude").setScale(0.9);
+      this.player = this.physics.add.sprite(pos.x, pos.y + 4, "dude").setScale(0.85);
     } else {
-      this.player = this.physics.add.sprite(200, 200, "dude").setScale(0.9);
+      this.player = this.physics.add.sprite(200, 200, "dude").setScale(0.85);
     }
+
+    this.boxLayer.setDepth(20);
+    this.boxtwoLayer.setDepth(30);
+    this.fireLayer.setDepth(10);
+
     this.wallLayer.setCollisionBetween(1, 4000);
     this.physics.add.collider(this.player, this.wallLayer);
 
@@ -194,8 +199,8 @@ export default class BattleScene extends Phaser.Scene {
         this,
         Object.assign({}, this.joystickConfig, {
           radius: 32,
-          base: this.add.image(0, 0, "base").setDisplaySize(110, 110),
-          thumb: this.add.image(0, 0, "thumb").setDisplaySize(60, 60),
+          base: this.add.image(0, 0, "base").setDisplaySize(110, 110).setDepth(100),
+          thumb: this.add.image(0, 0, "thumb").setDisplaySize(60, 60).setDepth(100),
         }),
       )
       .on("update", this.update, this);
@@ -243,7 +248,7 @@ export default class BattleScene extends Phaser.Scene {
   moveCharacter(cursorTarget: any): void {
     if (cursorTarget.left.isDown || cursorTarget.right.isDown || cursorTarget.up.isDown || cursorTarget.down.isDown) {
       this.speed += 3;
-      if (this.speed > 200) this.speed = 200;
+      if (this.speed > 150) this.speed = 150;
     } else {
       this.speed -= 10;
       if (this.speed < 20) this.speed = 20;
