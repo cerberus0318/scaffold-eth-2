@@ -101,7 +101,7 @@ export default class BattleScene extends Phaser.Scene {
 
     this.boxLayer.setDepth(20);
     this.boxtwoLayer.setDepth(30);
-    this.fireLayer.setDepth(10);
+    // this.fireLayer.setDepth(10);
 
     this.wallLayer.setCollisionBetween(1, 4000);
     this.physics.add.collider(this.player, this.wallLayer);
