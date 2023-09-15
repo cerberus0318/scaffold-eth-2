@@ -29,10 +29,12 @@ export default class BattleScene extends Phaser.Scene {
   lastCursorDirection: any;
   animatedMiner: any;
   polygons: any;
+  cb: any;
   speed?: any;
 
-  constructor() {
+  constructor(cb: any) {
     super("battle");
+    this.cb = cb;
   }
 
   init(): void {
@@ -58,9 +60,9 @@ export default class BattleScene extends Phaser.Scene {
     this.load.image("room", "assets/tilemaps/tiles/room.png");
     this.load.image("gold", "assets/tilemaps/tiles/gold.png");
     this.load.tilemapTiledJSON("shopMap", "assets/tilemaps/maps/shopRoom.tmj");
-    this.load.tilemapTiledJSON("depotMap", "assets/tilemaps/maps/depot.tmj");
-    this.load.tilemapTiledJSON("forgeMap", "assets/tilemaps/maps/forge.tmj");
-    this.load.tilemapTiledJSON("recruMap", "assets/tilemaps/maps/recru.tmj");
+    this.load.tilemapTiledJSON("depotMap", "assets/tilemaps/maps/depotRoom.tmj");
+    this.load.tilemapTiledJSON("forgeMap", "assets/tilemaps/maps/forgeRoom.tmj");
+    this.load.tilemapTiledJSON("recruMap", "assets/tilemaps/maps/recruRoom.tmj");
     this.load.spritesheet("dude", "assets/sprites/guy_2.png", {
       frameWidth: 31,
       frameHeight: 32,
@@ -112,26 +114,29 @@ export default class BattleScene extends Phaser.Scene {
       this.player,
       this.bridgeLayer,
       (player, tile: any) => {
-        if ((tile.x === 3 || tile.x === 4) && tile.y === 2) {
-          this.scene.start("shop", { cPos: { x: this.player?.x, y: this.player?.y } });
-        }
-        if ((tile.x === 10 || tile.x === 11) && tile.y === 4) {
-          this.scene.start("depot", { cPos: { x: this.player?.x, y: this.player?.y } });
-        }
-        if ((tile.x === 14 || tile.x === 15) && tile.y === 7) {
+        if ((tile.x === 3 || tile.x === 4) && tile.y === 1) {
           this.scene.start("forge", { cPos: { x: this.player?.x, y: this.player?.y } });
         }
-        if ((tile.x === 14 || tile.x === 15) && tile.y === 21) {
+        if ((tile.x === 14 || tile.x === 15) && tile.y === 6) {
+          this.scene.start("depot", { cPos: { x: this.player?.x, y: this.player?.y } });
+        }
+        if (tile.x === 3 && tile.y === 20) {
+          this.scene.start("shop", { cPos: { x: this.player?.x, y: this.player?.y } });
+        }
+        if (tile.x === 25 && tile.y === 26) {
           this.scene.start("recru", { cPos: { x: this.player?.x, y: this.player?.y } });
         }
-        if (tile.x === 3 && tile.y === 21) {
-          console.log("Scene5");
-        }
-        if (tile.x === 25 && tile.y === 27) {
-          console.log("Scene6");
+        if ((tile.x === 14 || tile.x === 15) && tile.y === 20) {
+          if (this.cb) {
+            this.cb();
+          }
+          this.player?.setY(this.player.y + 3);
         }
         if (tile.x === 22 && tile.y === 6) {
-          console.log("Scene7");
+          if (this.cb) {
+            this.cb();
+          }
+          this.player?.setY(this.player.y + 3);
         }
       },
       undefined,

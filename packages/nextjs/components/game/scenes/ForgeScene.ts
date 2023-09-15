@@ -49,9 +49,6 @@ export default class ForgeScene extends Phaser.Scene {
   }
 
   create(data: any): void {
-    this.sys.game.canvas.width = 320;
-    this.sys.game.canvas.height = 320;
-
     this.cursors = this.input.keyboard?.createCursorKeys();
     this.map = this.make.tilemap({ key: "forgeMap" });
     const groundTiles = this.map.addTilesetImage("gold") as any;
@@ -62,14 +59,14 @@ export default class ForgeScene extends Phaser.Scene {
     this.labelLayer = this.map.createLayer("Label", groundTiles, 0, 0) as Phaser.Tilemaps.TilemapLayer;
 
     // Boundary Effect
-    this.player = this.physics.add.sprite(145, 270, "dude").setScale(0.9);
+    this.player = this.physics.add.sprite(520, 650, "dude").setScale(0.9);
     this.wallLayer.setCollisionBetween(1, 4000);
     this.physics.add.collider(this.player, this.wallLayer);
     this.physics.add.overlap(
       this.player,
       this.wallLayer,
       (player, tile: any) => {
-        if (tile.x === 4 && tile.y === 9) {
+        if ((tile.x === 15 || tile.x === 16) && tile.y === 22) {
           this.scene.start("battle", { cPos: data.cPos });
         }
       },
@@ -82,9 +79,9 @@ export default class ForgeScene extends Phaser.Scene {
     this.player.setCollideWorldBounds(true);
     this.player.setFrame(1);
     this.physics.add.collider(this.player, this.wallLayer);
-    this.physics.world.bounds.width = 320;
-    this.physics.world.bounds.height = 320;
-    this.cameras.main.setBounds(0, 0, 320, 320);
+    this.physics.world.bounds.width = 1024;
+    this.physics.world.bounds.height = 1024;
+    this.cameras.main.setBounds(0, 0, 1024, 1024);
     this.cameras.main.startFollow(this.player, true, 0.8, 0.8);
 
     this.createVirtualJoystick();

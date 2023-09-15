@@ -42,7 +42,9 @@ const GamePage = () => {
           // width: 800,
         },
         scene: [
-          BattleScene,
+          new BattleScene(() => {
+            setShowDialog(true);
+          }),
           new ShopScene(() => {
             setShowDialog(true);
           }),

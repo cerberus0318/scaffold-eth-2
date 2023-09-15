@@ -61,7 +61,7 @@ export default class ShopScene extends Phaser.Scene {
     this.itemLayer = this.map.createLayer("Item", groundTiles, 0, 0) as Phaser.Tilemaps.TilemapLayer;
 
     // Boundary Effect
-    this.player = this.physics.add.sprite(520, 850, "dude").setScale(0.85);
+    this.player = this.physics.add.sprite(520, 650, "dude").setScale(0.85);
     this.wallLayer.setCollisionBetween(1, 4000);
     this.physics.add.collider(this.player, this.wallLayer);
 
@@ -71,13 +71,14 @@ export default class ShopScene extends Phaser.Scene {
       this.player,
       this.wallLayer,
       (player, tile: any) => {
-        if ((tile.x === 15 || tile.x === 16) && tile.y === 28) {
+        console.log(tile.x, tile.y);
+        if ((tile.x === 15 || tile.x === 16) && tile.y === 22) {
           this.scene.start("battle", { cPos: data.cPos });
         }
         // console.log(tile.x, tile.y)
         if (
-          (tile.x === 9 || tile.x === 10 || tile.x === 15 || tile.x === 16 || tile.x === 21 || tile.x === 22) &&
-          tile.y === 10
+          ((tile.x === 12 || tile.x === 13 || tile.x === 18 || tile.x === 19) && tile.y === 13) ||
+          ((tile.x === 14 || tile.x === 15 || tile.x === 16 || tile.x === 17) && tile.y === 14)
         ) {
           if (this.cb) {
             this.cb();
